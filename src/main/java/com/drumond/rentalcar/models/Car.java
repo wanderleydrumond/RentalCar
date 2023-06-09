@@ -5,8 +5,6 @@ import com.drumond.rentalcar.enums.converters.SegmentConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 @Entity
@@ -15,7 +13,7 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
     @Convert(converter = SegmentConverter.class)
     private Segment segment;
     @NotNull
