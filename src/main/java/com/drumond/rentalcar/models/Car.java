@@ -12,7 +12,6 @@ import lombok.Data;
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
     @Convert(converter = SegmentConverter.class)
     private Segment segment;

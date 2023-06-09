@@ -16,13 +16,12 @@ import java.util.UUID;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
-    @NotNull
     private UUID token;
     @NotNull
     private String name;
     @NotNull
+    @Column(unique = true, updatable = false)
     private String code;
     @Convert(converter = RoleConverter.class)
     private Role role;
