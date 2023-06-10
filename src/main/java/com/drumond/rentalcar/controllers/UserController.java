@@ -10,6 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
+import static com.drumond.rentalcar.utilities.Constants.TOKEN;
+
 /**
  * Contains all requisition methods that refers to user.
  *
@@ -20,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("user/")
 public class UserController {
-    private final String ID = "id";
 
     @Autowired
     private UserService userService;
@@ -30,7 +33,16 @@ public class UserController {
     @PutMapping(value = "signin")
     @Transactional(rollbackFor = Throwable.class)
     public ResponseEntity<UserDTO> signIn(@RequestParam(value = "code") String code, @RequestParam(value = "password") String password) {
-        User user = this.userService.signIn(code, password);
+        User user = userService.signIn(code, password);
+        UserDTO userDTO = userMapper.toDto(user);
+
+        return ResponseEntity.ok().body(userDTO);
+    }
+
+    @PutMapping(value = "signout/{" + TOKEN + "}")
+    @Transactional(rollbackFor = Throwable.class)
+    public ResponseEntity<UserDTO> signOut(@PathVariable(value = TOKEN) UUID token) {
+        User user = userService.signOut(token);
         UserDTO userDTO = userMapper.toDto(user);
 
         return ResponseEntity.ok().body(userDTO);

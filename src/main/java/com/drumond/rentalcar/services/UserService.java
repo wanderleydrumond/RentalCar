@@ -29,4 +29,16 @@ public class UserService {
 
         return userRepository.save(userFound.get());
     }
+
+    public User signOut(UUID token) {
+        User user = findByToken(token);
+        user.setToken(null);
+
+        return userRepository.save(user);
+    }
+
+    public User findByToken(UUID token) {
+        return userRepository.findByToken(token).orElseThrow(() -> new RentalCarException(HttpStatus.NOT_FOUND,
+                "User not Found", "Does not exists any user with the provided token: " + token));
+    }
 }
