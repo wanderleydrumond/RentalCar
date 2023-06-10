@@ -16,11 +16,11 @@ public class RentalCarException extends RuntimeException {
     public RentalCarException(String body) {
         super(body);
     }
-    public RentalCarException(String body, HttpStatus httpStatus) {
+    public RentalCarException(HttpStatus httpStatus, String body) {
         super(body);
         this.httpStatus = httpStatus;
     }
-    public RentalCarException(String body, HttpStatus httpStatus, String header) {
+    public RentalCarException(HttpStatus httpStatus, String header, String body) {
         super(body);
         this.httpStatus = httpStatus;
         this.header = header;
