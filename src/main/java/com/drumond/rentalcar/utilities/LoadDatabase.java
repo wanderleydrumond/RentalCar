@@ -4,7 +4,6 @@ import com.drumond.rentalcar.enums.Role;
 import com.drumond.rentalcar.exceptions.RentalCarException;
 import com.drumond.rentalcar.models.User;
 import com.drumond.rentalcar.repositories.UserRepository;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class LoadDatabase {
     private final UserRepository userRepository;
-    private final EntityManager entityManager;
 
     @EventListener
     @Transactional(rollbackFor = Throwable.class)
