@@ -13,6 +13,9 @@ public class RentalCarException extends RuntimeException {
     @Getter
     private String header;
 
+    public RentalCarException(String body) {
+        super(body);
+    }
     public RentalCarException(String body, HttpStatus httpStatus) {
         super(body);
         this.httpStatus = httpStatus;

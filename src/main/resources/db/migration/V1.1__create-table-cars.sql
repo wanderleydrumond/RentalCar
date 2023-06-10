@@ -1,9 +1,9 @@
-create table cars
+CREATE TABLE cars
 (
-    id          int8        not null,
-    segment     int2        not null,
-    daily_price double      not null,
-    brand       varchar(13) not null,
-    constraint cars_pk
-        primary key (id)
+    id          BIGINT      AUTO_INCREMENT,
+    segment     INT2        NOT NULL,
+    daily_price DOUBLE      NOT NULL,
+    brand       VARCHAR(13) NOT NULL,
+    CONSTRAINT cars_pk
+        PRIMARY KEY (id)
 );

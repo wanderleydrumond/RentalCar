@@ -1,7 +1,7 @@
 package com.drumond.rentalcar.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.ZonedDateTime;
@@ -11,7 +11,10 @@ import java.time.ZonedDateTime;
  *
  * @author Wanderley Drumond
  */
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "rents")
 public class Rent {

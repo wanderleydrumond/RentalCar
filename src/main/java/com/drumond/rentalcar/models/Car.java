@@ -4,14 +4,20 @@ import com.drumond.rentalcar.enums.Segment;
 import com.drumond.rentalcar.enums.converters.SegmentConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Car information type that backend consumes and produces.
  *
  * @author Wanderley Drumond
  */
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "cars")
 public class Car {

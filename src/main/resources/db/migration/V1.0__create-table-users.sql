@@ -1,13 +1,13 @@
-create table users
+CREATE TABLE users
 (
-    id       int8        not null,
-    name     varchar(50) not null,
-    code     varchar(7)  not null comment 'Replaces the username. Auto generated',
-    role     int2        not null,
-    password varchar(50) not null,
-    token    binary(16)      null,
-    constraint users_pk
-        primary key (id),
-    constraint users_unique
-        unique (code)
+    id       BIGINT      AUTO_INCREMENT,
+    name     VARCHAR(50) NOT NULL,
+    code     VARCHAR(7)  NOT NULL COMMENT 'Replaces the username. Auto generated',
+    role     INT2        NOT NULL,
+    password VARCHAR(50),
+    token    BINARY(16),
+    CONSTRAINT users_pk
+        PRIMARY KEY (id),
+    CONSTRAINT users_unique
+        UNIQUE (code)
 );

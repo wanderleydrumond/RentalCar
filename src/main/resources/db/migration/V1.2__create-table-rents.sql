@@ -1,14 +1,14 @@
-create table rents
+CREATE TABLE rents
 (
-    id        int8  not null,
-    user_id   int8  not null,
-    car_id    int8  not null,
-    rent_at   date not null,
-    return_at date not null,
-    constraint rents_pk
-        primary key (id),
-    constraint rents_cars_id_fk
-        foreign key (car_id) references cars (id),
-    constraint rents_users_id_fk
-        foreign key (user_id) references users (id)
+    id        BIGINT     AUTO_INCREMENT,
+    user_id   BIGINT     NOT NULL,
+    car_id    BIGINT     NOT NULL,
+    rent_at   TIMESTAMP  NOT NULL,
+    return_at TIMESTAMP  DEFAULT NULL,
+    CONSTRAINT rents_pk
+        PRIMARY KEY (id),
+    CONSTRAINT rents_cars_id_fk
+        FOREIGN KEY (car_id) references cars (id),
+    CONSTRAINT rents_users_id_fk
+        FOREIGN KEY (user_id) references users (id)
 );

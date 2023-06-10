@@ -4,7 +4,9 @@ import com.drumond.rentalcar.enums.Role;
 import com.drumond.rentalcar.enums.converters.RoleConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
@@ -14,6 +16,8 @@ import java.util.UUID;
  *
  * @author Wanderley Drumond
  */
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -24,9 +28,10 @@ public class User {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     /**
-     * Indicates if an user is logged or not.
+     * Indicates if a user is logged or not.
      *
      * @see <a href= "https://www.codementor.io/@petrepopescu/how-to-use-string-uuid-in-hibernate-with-mysql-1jrhjh6ef5">How to use String UUID in Hibernate with MySQL</a>
      */
@@ -43,6 +48,7 @@ public class User {
     @NotNull
     @Column(unique = true, updatable = false)
     private String code;
+    private String password;
     /**
      * Used to determine the permissions a user has in the system.
      */
