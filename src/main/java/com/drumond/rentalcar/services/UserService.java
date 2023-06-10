@@ -13,13 +13,31 @@ import java.text.DecimalFormat;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Class that contains all the programmatic logic regarding the user.
+ * @author Wanderley Drumond
+ */
 @Service
 @AllArgsConstructor
 public class UserService {
 
+    /**
+     * Contains all methods to manipulates database regarding users table.
+     */
     @Autowired
     private UserRepository userRepository;
 
+    /**<ol>
+     *  <li>Search for the user in database</li>
+     *  <li>Checks is the {@link Optional<User>} has an {@link User} inside</li>
+     *  <li>Sets the user token</li>
+     *  <li>Updates the user in database</li>
+     * </ol>
+     * @param code the username
+     * @param password the user password
+     * @return the logged {@link User}
+     * @throws RentalCarException with response code 401 (UNAUTHORIZED) if username and/or password are not found in database.
+     */
     public User signIn(String code, String password) {
         Optional<User> userFound = userRepository.findByCodeAndPassword(code, password);
 

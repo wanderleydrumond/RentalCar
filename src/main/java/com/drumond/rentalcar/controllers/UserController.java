@@ -26,8 +26,14 @@ import static com.drumond.rentalcar.utilities.Constants.TOKEN;
 @RequestMapping("user/")
 public class UserController {
 
+    /**
+     * Contains all methods related to business layer that concerns to user.
+     */
     @Autowired
     private UserService userService;
+    /**
+     * Contains methods that allows to switch between {@link User} and {@link UserDTO}.
+     */
     @Autowired
     private UserMapper userMapper;
 
@@ -41,6 +47,16 @@ public class UserController {
         return ResponseEntity.ok().body(createdUserDTO);
     }
 
+    /**
+     * Signs a user into the system.
+     * @param code the username
+     * @param password the user password
+     * @return {@link ResponseEntity<UserDTO>} with status code:
+     *  <ul>
+     *      <li><strong>200 (OK)</strong> if the user was signed in successfully</li>
+     *      <li><strong>401 (UNAUTHORISED)</strong> if the code or/and password is incorrect</li>
+     *  </ul>
+     */
     @PutMapping(value = "signin")
     @Transactional(rollbackFor = Throwable.class)
     public ResponseEntity<UserDTO> signIn(@RequestParam(value = "code") String code, @RequestParam(value = "password") String password) {
@@ -50,6 +66,15 @@ public class UserController {
         return ResponseEntity.ok().body(userDTO);
     }
 
+    /**
+     * Signs out the logged user from the system.
+     * @param token logged user identifier key
+     * @return {@link ResponseEntity<UserDTO>} with status code:
+     *  <ul>
+     *      <li><strong>200 (OK)</strong> if the user was signed out successfully</li>
+     *      <li><strong>404 (NOT FOUND)</strong> if the provided token was not found in database</li>
+     *  </ul>
+     */
     @PutMapping(value = "signout/{" + TOKEN + "}")
     @Transactional(rollbackFor = Throwable.class)
     public ResponseEntity<UserDTO> signOut(@PathVariable(value = TOKEN) UUID token) {
