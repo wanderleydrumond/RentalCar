@@ -4,6 +4,7 @@ import com.drumond.rentalcar.dtos.UserDTO;
 import com.drumond.rentalcar.mappers.UserMapper;
 import com.drumond.rentalcar.models.User;
 import com.drumond.rentalcar.services.UserService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,16 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserMapper userMapper;
+
+    @PostMapping(value = "create/{" + TOKEN + "}")
+    @Transactional(rollbackFor = Throwable.class)
+    public ResponseEntity<UserDTO> create(@PathVariable(value = TOKEN) UUID token, @RequestBody @Valid UserDTO userDTO) {
+        User newUser = userMapper.toModel(userDTO);
+        User createdUser = userService.create(token, newUser);
+        UserDTO createdUserDTO = userMapper.toDto(createdUser);
+
+        return ResponseEntity.ok().body(createdUserDTO);
+    }
 
     @PutMapping(value = "signin")
     @Transactional(rollbackFor = Throwable.class)

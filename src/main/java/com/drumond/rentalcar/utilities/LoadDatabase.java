@@ -22,10 +22,10 @@ public class LoadDatabase {
     @EventListener
     @Transactional(rollbackFor = Throwable.class)
     public void loadUsers(ApplicationStartedEvent applicationStartedEvent) {
-    final String MANAGER_CODE = "MAN_01",
-                 EMPLOYEE_CODE = "EMP_01",
-                 MANAGER_NAME = "João Gerente",
-                 EMPLOYEE_NAME = "Pedro Empregado",
+    final String MANAGER_CODE = "MAN_001",
+                 EMPLOYEE_CODE = "EMP_001",
+                 MANAGER_NAME = "Migi",
+                 EMPLOYEE_NAME = "Shinichi",
                  PASSWORD = "123456",
                  LOG_ERROR = "Error loading database";
 

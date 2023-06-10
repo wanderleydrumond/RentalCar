@@ -1,5 +1,6 @@
 package com.drumond.rentalcar.repositories;
 
+import com.drumond.rentalcar.enums.Role;
 import com.drumond.rentalcar.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -16,4 +17,5 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     Boolean existsByCodeAndName(String code, String name);
     Optional<User> findByCodeAndPassword(String code, String password);
     Optional<User> findByToken(UUID token);
+    Integer countByRole(Role role);
 }
