@@ -7,6 +7,11 @@ import lombok.Setter;
 
 import java.time.ZonedDateTime;
 
+/**
+ * Rent information type that the frontend consumes and produces.
+ *
+ * @author Wanderley Drumond
+ */
 @NoArgsConstructor
 @Getter
 @Setter

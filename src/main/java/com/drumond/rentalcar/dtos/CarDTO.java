@@ -5,6 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+/**
+ * Car information type that the frontend consumes and produces.
+ *
+ * @author Wanderley Drumond
+ */
 @NoArgsConstructor
 @Getter
 @Setter

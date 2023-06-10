@@ -7,6 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
+
+/**
+ * User information type that the frontend consumes and produces.
+ *
+ * @author Wanderley Drumond
+ */
 @NoArgsConstructor
 @Getter
 @Setter

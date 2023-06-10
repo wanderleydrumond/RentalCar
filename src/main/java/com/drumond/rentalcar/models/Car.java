@@ -6,18 +6,35 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+/**
+ * Car information type that backend consumes and produces.
+ *
+ * @author Wanderley Drumond
+ */
 @Data
 @Entity
 @Table(name = "cars")
 public class Car {
+    /**
+     * Car identification in database.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    /**
+     * The {@link Segment} which the car belongs.
+     */
     @Convert(converter = SegmentConverter.class)
     private Segment segment;
+    /**
+     * Daily cost of the car.
+     */
     @NotNull
     @Column(name = "daily_price")
     private Double dailyPrice;
+    /**
+     * The brand which the car belongs.
+     */
     @NotNull
     private String brand;
 }
