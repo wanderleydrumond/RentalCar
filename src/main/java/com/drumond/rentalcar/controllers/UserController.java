@@ -17,7 +17,6 @@ import static com.drumond.rentalcar.utilities.Constants.TOKEN;
 
 /**
  * Contains all requisition methods that refers to user.
- *
  * @author Wanderley Drumond
  */
 @CrossOrigin
@@ -67,8 +66,8 @@ public class UserController {
     }
 
     /**
-     * Signs out the logged user from the system.
-     * @param token logged user identifier key
+     * Signs out the signed user from the system.
+     * @param token signed user identifier key
      * @return {@link ResponseEntity<UserDTO>} with status code:
      *  <ul>
      *      <li><strong>200 (OK)</strong> if the user was signed out successfully</li>

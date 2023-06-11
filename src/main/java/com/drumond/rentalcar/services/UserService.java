@@ -35,7 +35,7 @@ public class UserService {
      * </ol>
      * @param code the username
      * @param password the user password
-     * @return the logged {@link User}
+     * @return the signed {@link User}
      * @throws RentalCarException with response code 401 (UNAUTHORIZED) if username and/or password are not found in database.
      */
     public User signIn(String code, String password) {
@@ -50,22 +50,47 @@ public class UserService {
         return userRepository.save(userFound.get());
     }
 
+    /** Signs out a user from the system.
+     * <ol>
+     *     <li>Gets the user by their token</li>
+     *     <li>Sets their token as null</li>
+     * </ol>
+     * @param token signed useridentifier key
+     * @return The unsigned {@link User}
+     */
     public User signOut(UUID token) {
-        User user = findByToken(token);
+        User user = getByToken(token);
         user.setToken(null);
 
         return userRepository.save(user);
     }
 
-    public User findByToken(UUID token) {
+    /**
+     * Gets the {@link User} that owns the given token.
+     * @param token user identifier key
+     * @return The {@link User} that owns the given token
+     * @throws RentalCarException with HTTP response status <strong>404 (NOT FOUND)</strong>
+     */
+    public User getByToken(UUID token) {
         return userRepository.findByToken(token).orElseThrow(() -> new RentalCarException(HttpStatus.NOT_FOUND,
                 "User not Found", "Does not exists any user with the provided token: " + token));
     }
 
+    /**
+     * Creates a new user into the system.
+     * <ol>
+     *     <li>Gets the user who will create another one</li>
+     *     <li>Checks if the signed user is an employee</li>
+     *     <li>Sets a new code for the new user</li>
+     * </ol>
+     * @param token signed user identifier key
+     * @param newUser the user to create
+     * @return The created {@link User}
+     */
     public User create(UUID token, User newUser) {
-        User loggedUser = findByToken(token);
+        User signedUser = getByToken(token);
 
-        if (loggedUser.getRole().equals(Role.EMPLOYEE)) {
+        if (signedUser.getRole().equals(Role.EMPLOYEE)) {
             newUser.setRole(Role.CLIENT);
         }
 
@@ -74,6 +99,12 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
+    /**
+     * <p>Generates a new user code.</p>
+     * <p>Checks the amount of user that contains that role and adds a unity to it.</p>
+     * @param role distinguish what are privileges that a user have in the system
+     * @return the generated code accornding to the user role
+     */
     private String generateCode(Role role) {
         DecimalFormat decimalFormat = new DecimalFormat("000");
         return switch (role) {

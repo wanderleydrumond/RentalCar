@@ -31,7 +31,7 @@ public class User {
     @Column(name = "id")
     private Long id;
     /**
-     * Indicates if a user is logged or not.
+     * Indicates if a user is signed or not.
      *
      * @see <a href= "https://www.codementor.io/@petrepopescu/how-to-use-string-uuid-in-hibernate-with-mysql-1jrhjh6ef5">How to use String UUID in Hibernate with MySQL</a>
      */

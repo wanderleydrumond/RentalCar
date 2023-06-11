@@ -11,12 +11,20 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Inserts some data in databse when the system is started.
+ */
 @Component
 @Slf4j
 @RequiredArgsConstructor
 public class LoadDatabase {
     private final UserRepository userRepository;
 
+    /**
+     * Adds two new users in database.
+     * @param applicationStartedEvent event that listens that triggers the action to be done
+     * @throws RentalCarException if some error occured on the save process
+     */
     @EventListener
     @Transactional(rollbackFor = Throwable.class)
     public void loadUsers(ApplicationStartedEvent applicationStartedEvent) {
