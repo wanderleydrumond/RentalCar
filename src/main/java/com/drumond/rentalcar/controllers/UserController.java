@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 import static com.drumond.rentalcar.utilities.Constants.TOKEN;
@@ -81,5 +82,13 @@ public class UserController {
         UserDTO userDTO = userMapper.toDto(user);
 
         return ResponseEntity.ok().body(userDTO);
+    }
+
+    @GetMapping(value = "all")
+    public ResponseEntity<List<UserDTO>> getAllUsers(){
+        List<User> users = userService.getAll();
+        List<UserDTO> usersDTO = userMapper.toDTOs(users);
+
+        return ResponseEntity.ok().body(usersDTO);
     }
 }

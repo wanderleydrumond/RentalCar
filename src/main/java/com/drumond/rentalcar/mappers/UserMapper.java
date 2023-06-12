@@ -5,6 +5,8 @@ import com.drumond.rentalcar.models.User;
 import jakarta.validation.Valid;
 import org.mapstruct.*;
 
+import java.util.List;
+
 /**
  * Responsible by transform {@link User} data that transits between backend and frontend.
  * @author Wanderley Drumond
@@ -25,6 +27,7 @@ public interface UserMapper {
      * @return the {@link UserDTO} resultant object
      */
     UserDTO toDto(User user);
+    List<UserDTO> toDTOs(List<User> users);
 
     /**
      * Updates a {@link User}.

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -112,5 +113,13 @@ public class UserService {
             case EMPLOYEE -> "EMP_" + (decimalFormat.format(userRepository.countByRole(Role.EMPLOYEE) + 1));
             case MANAGER -> "MAN_" + (decimalFormat.format(userRepository.countByRole(Role.MANAGER) + 1));
         };
+    }
+
+    /**
+     * Gets all users existent in database.
+     * @return The {@link List} of all {@link User}s
+     */
+    public List<User> getAll() {
+        return userRepository.findAll();
     }
 }
