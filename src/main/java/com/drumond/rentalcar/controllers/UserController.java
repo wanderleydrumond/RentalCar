@@ -122,4 +122,25 @@ public class UserController {
 
         return usersDTO.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(usersDTO);
     }
+
+    /**
+     * Gets the user that have the provided id.
+     * @param token signed user identifier key (who will perform the search)
+     * @param id user identification number in database (who should be found)
+     * @return {@link ResponseEntity} with status code:
+     *  <ul>
+     *      <li><strong>200 (OK)</strong> if user was found, along with the {@link User}</li>
+     *      <li><strong>204 (NO CONTENT)</strong> if no users were found in database</li>
+     *      <li><strong>403 (FORBIDDEN)</strong> if the provided token was not found in database</li>
+     *      <li><strong>404 (NOT FOUND)</strong> if the provided id was not found in database</li>
+     *  </ul>
+     */
+    @GetMapping(value = "by-id/{" + TOKEN + "}")
+    @Transactional(readOnly = true)
+    public ResponseEntity<UserDTO> getById(@PathVariable(value = TOKEN) UUID token, @RequestParam(value = ID) Integer id) {
+        User user = userService.getById(token, id);
+        UserDTO userDTO = userMapper.toDto(user);
+
+        return ResponseEntity.ok().body(userDTO);
+    }
 }

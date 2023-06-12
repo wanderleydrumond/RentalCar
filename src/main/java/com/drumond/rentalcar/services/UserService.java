@@ -136,4 +136,22 @@ public class UserService {
         getByToken(token);
         return userRepository.findByCodeOrName(code, name);
     }
+
+    /**
+     * Gets the user that have the provided id.
+     * @param token signed user identifier key (who will perform the search)
+     * @param id user identification number in database (who should be found)
+     * @return The {@link User} that have the provided id
+     * @throws RentalCarException if the provided id is not found in database
+     */
+    public User getById(UUID token, Integer id) {
+        getByToken(token);
+        Optional<User> optionalUser = userRepository.findById(Long.valueOf(id));
+
+        if (optionalUser.isEmpty()) {
+            throw new RentalCarException(HttpStatus.NOT_FOUND, "User not found", "The provided id: " + id + " does not exists in database.");
+        }
+
+        return optionalUser.get();
+    }
 }
