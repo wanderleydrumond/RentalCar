@@ -1,7 +1,9 @@
 package com.drumond.rentalcar.services;
 
+import com.drumond.rentalcar.dtos.UserDTO;
 import com.drumond.rentalcar.enums.Role;
 import com.drumond.rentalcar.exceptions.RentalCarException;
+import com.drumond.rentalcar.mappers.UserMapper;
 import com.drumond.rentalcar.models.User;
 import com.drumond.rentalcar.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -27,6 +29,8 @@ public class UserService {
      */
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserMapper userMapper;
 
     /**<ol>
      *  <li>Search for the user in database</li>
@@ -94,6 +98,7 @@ public class UserService {
 
         if (signedUser.getRole().equals(Role.EMPLOYEE)) {
             newUser.setRole(Role.CLIENT);
+            newUser.setPassword(null);
         }
 
         newUser.setCode(generateCode(newUser.getRole() != null ? newUser.getRole() : Role.CLIENT));
@@ -144,14 +149,36 @@ public class UserService {
      * @return The {@link User} that have the provided id
      * @throws RentalCarException if the provided id is not found in database
      */
-    public User getById(UUID token, Integer id) {
-        getByToken(token);
-        Optional<User> optionalUser = userRepository.findById(Long.valueOf(id));
+    public User getById(UUID token, Long id) {
+        if (token != null) {
+            getByToken(token);
+        }
+        return userRepository.findById(id).orElseThrow(() -> new RentalCarException(HttpStatus.NOT_FOUND, "User not found", "The provided id: " + id + " does not exists in database."));
+    }
 
-        if (optionalUser.isEmpty()) {
-            throw new RentalCarException(HttpStatus.NOT_FOUND, "User not found", "The provided id: " + id + " does not exists in database.");
+    /**
+     * Updates the name for the provided user.
+     * <ol>
+     *     <li>Gets the signed user</li>
+     *     <li>Gets the user who will suffer the changes</li>
+     *     <li>Checks if the user is an employee and is trying to update a client</li>
+     *     <li>Performs the update in database</li>
+     * </ol>
+     * @param token signed user identifier key (who will perform the update)
+     * @param body user data to update
+     * @return the updated {@link User}
+     * @throws RentalCarException if the signed user is a employee and is trying to update a user that is not a client
+     */
+    public User update(UUID token, UserDTO body) {
+        User userWhoWillUpdate = getByToken(token);
+        User userWhoWillBeUpdated = getById(null, body.getId());
+
+        if (userWhoWillUpdate.getRole().equals(Role.EMPLOYEE) && !userWhoWillBeUpdated.getRole().equals(Role.CLIENT)) {
+            throw new RentalCarException(HttpStatus.FORBIDDEN, "Action not allowed", "You do not have enough permitioms to perform this operation.");
         }
 
-        return optionalUser.get();
+        userWhoWillBeUpdated = userMapper.partialUpdate(body, userWhoWillBeUpdated);
+
+        return userWhoWillBeUpdated;
     }
 }
