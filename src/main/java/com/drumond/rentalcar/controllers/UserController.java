@@ -7,6 +7,7 @@ import com.drumond.rentalcar.services.UserService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,16 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * Creates a new user in the system.
+     * @param token signed user identifier key (who will create the new user)
+     * @param userDTO Necessary data that make up a user
+     * @return {@link ResponseEntity} with status code:
+     *  <ul>
+     *      <li><strong>201 (CREATED)</strong> if the user was created, along with the {@link User}</li>
+     *      <li><strong>403 (FORBIDDEN)</strong> if the provided token was not found in database</li>
+     *  </ul>
+     */
     @PostMapping(value = "create/{" + TOKEN + "}")
     @Transactional(rollbackFor = Throwable.class)
     public ResponseEntity<UserDTO> create(@PathVariable(value = TOKEN) UUID token, @RequestBody @Valid UserDTO userDTO) {
@@ -44,7 +55,7 @@ public class UserController {
         User createdUser = userService.create(token, newUser);
         UserDTO createdUserDTO = userMapper.toDto(createdUser);
 
-        return ResponseEntity.ok().body(createdUserDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdUserDTO);
     }
 
     /**
