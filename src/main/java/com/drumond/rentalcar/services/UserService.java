@@ -70,12 +70,13 @@ public class UserService {
      * Gets the {@link User} that owns the given token.
      * @param token user identifier key
      * @return The {@link User} that owns the given token
-     * @throws RentalCarException with HTTP response status <strong>404 (NOT FOUND)</strong>
+     * @throws RentalCarException with HTTP response status <strong>403 (FORBIDDEN)</strong>
      */
     public User getByToken(UUID token) {
-        return userRepository.findByToken(token).orElseThrow(() -> new RentalCarException(HttpStatus.NOT_FOUND,
-                "User not Found", "Does not exists any user with the provided token: " + token));
+        return userRepository.findByToken(token).orElseThrow(() -> new RentalCarException(HttpStatus.FORBIDDEN,
+                "Action not allowed", "You cannot perform the action with the provided token: " + token));
     }
+
 
     /**
      * Creates a new user into the system.
@@ -119,7 +120,20 @@ public class UserService {
      * Gets all users existent in database.
      * @return The {@link List} of all {@link User}s
      */
-    public List<User> getAll() {
+    public List<User> getAll(UUID token) {
+        getByToken(token);
         return userRepository.findAll();
+    }
+
+    /**
+     * Gets users that have the provided code or name.
+     * @param token signed user identifier key (who will perform the search)
+     * @param code the username of the user to be found
+     * @param name the name of the user to be found
+     * @return the {@link User} {@link List} that have the provided code or name
+     */
+    public List<User> getByCodeOrName(UUID token, String code, String name) {
+        getByToken(token);
+        return userRepository.findByCodeOrName(code, name);
     }
 }

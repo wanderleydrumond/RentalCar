@@ -5,6 +5,7 @@ import com.drumond.rentalcar.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -47,4 +48,12 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
      * @return The amount of users that have the provided role.
      */
     Integer countByRole(Role role);
+
+    /**
+     * Finds in database the users that have the provided code or name.
+     * @param code the username of the user to be found
+     * @param name the name of the user to be found
+     * @return the {@link User} {@link List} that have the provided code or name
+     */
+    List<User> findByCodeOrName(String code, String name);
 }

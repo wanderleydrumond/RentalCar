@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-import static com.drumond.rentalcar.utilities.Constants.TOKEN;
+import static com.drumond.rentalcar.utilities.Constants.*;
 
 /**
  * Contains all requisition methods that refers to user.
@@ -69,10 +69,10 @@ public class UserController {
     /**
      * Signs out the signed user from the system.
      * @param token signed user identifier key
-     * @return {@link ResponseEntity<UserDTO>} with status code:
+     * @return {@link ResponseEntity} with status code:
      *  <ul>
      *      <li><strong>200 (OK)</strong> if the user was signed out successfully</li>
-     *      <li><strong>404 (NOT FOUND)</strong> if the provided token was not found in database</li>
+     *      <li><strong>403 (FORBIDDEN)</strong> if the current user is already signed out</li>
      *  </ul>
      */
     @PutMapping(value = "signout/{" + TOKEN + "}")
@@ -84,11 +84,42 @@ public class UserController {
         return ResponseEntity.ok().body(userDTO);
     }
 
-    @GetMapping(value = "all")
-    public ResponseEntity<List<UserDTO>> getAllUsers(){
-        List<User> users = userService.getAll();
+    /**
+     * Gets all users in the system.
+     * @return {@link ResponseEntity} with status code:
+     *  <ul>
+     *      <li><strong>200 (OK)</strong> if, at least one user was found, along with the {@link User} {@link List}</li>
+     *      <li><strong>204 (NO CONTENT)</strong> if no users were found in database</li>
+     *      <li><strong>403 (FORBIDDEN)</strong> if the provided token was not found in database</li>
+     *  </ul>
+     */
+    @GetMapping(value = "all/{" + TOKEN + "}")
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<UserDTO>> getAll(@PathVariable(value = TOKEN) UUID token){
+        List<User> users = userService.getAll(token);
         List<UserDTO> usersDTO = userMapper.toDTOs(users);
 
-        return ResponseEntity.ok().body(usersDTO);
+        return usersDTO.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(usersDTO);
+    }
+
+    /**
+     * Gets users that have the provided code or name.
+     * @param token signed user identifier key (who will perform the search)
+     * @param code the username of the user to be found
+     * @param name the name of the user to be found
+     * @return {@link ResponseEntity} with status code:
+     *  <ul>
+     *      <li><strong>200 (OK)</strong> if, at least one user was found, along with the {@link User} {@link List}</li>
+     *      <li><strong>204 (NO CONTENT)</strong> if no users were found in database</li>
+     *      <li><strong>403 (FORBIDDEN)</strong> if the provided token was not found in database</li>
+     *  </ul>
+     */
+    @GetMapping(value = "by-code-name/{" + TOKEN + "}")
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<UserDTO>> getByCodeOrName(@PathVariable(value = TOKEN) UUID token, @RequestParam(value = CODE) String code,@RequestParam(value = NAME) String name){
+        List<User> users = userService.getByCodeOrName(token, code, name);
+        List<UserDTO> usersDTO = userMapper.toDTOs(users);
+
+        return usersDTO.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(usersDTO);
     }
 }

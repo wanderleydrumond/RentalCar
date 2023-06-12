@@ -12,4 +12,12 @@ public class Constants {
      * The signed user identifier key
      */
     public static final String TOKEN = "token";
+    /**
+     * The name of the user.
+     */
+    public static final String NAME = "name";
+    /**
+     * The username.
+     */
+    public static final String CODE = "code";
 }
