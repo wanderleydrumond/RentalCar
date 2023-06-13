@@ -9,10 +9,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
+import static com.drumond.rentalcar.utilities.Constants.BRAND;
 import static com.drumond.rentalcar.utilities.Constants.TOKEN;
 
 /**
@@ -47,11 +50,21 @@ public class CarController {
      *  </ul>
      */
     @PostMapping(value = "create/{" + TOKEN + "}")
+    @Transactional(rollbackFor = Throwable.class)
     public ResponseEntity<CarDTO> create(@PathVariable(value = TOKEN) UUID token, @RequestBody @Valid CarDTO body) {
         Car newCar = carMapper.toModel(body);
         Car createdCar = carService.create(token, newCar);
         CarDTO createdCarDTO = carMapper.toDto(createdCar);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCarDTO);
+    }
+
+    @GetMapping(value = "by-brand/{" + TOKEN + "}")
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<CarDTO>> getAllByBrand(@PathVariable(value = TOKEN) UUID token, @RequestParam(value = BRAND) String brand) {
+        List<Car> carsFound = carService.getByBrand(token, brand);
+        List<CarDTO> carsDTOFound = carMapper.toDtos(carsFound);
+
+        return ResponseEntity.ok().body(carsDTOFound);
     }
 }

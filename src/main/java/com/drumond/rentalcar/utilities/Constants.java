@@ -20,4 +20,11 @@ public class Constants {
      * The username.
      */
     public static final String CODE = "code";
+    /**
+     * The car brand.
+     */
+    public static final String BRAND = "brand";
+    public static final String HEADER_FORBIDDEN = "Action not allowed";
+    public static final String HEADER_USER_NOT_FOUND = "User not found";
+    public static final String BODY_LACK_PERMITIONS = "You do not have enough permitioms to perform this operation.";
 }

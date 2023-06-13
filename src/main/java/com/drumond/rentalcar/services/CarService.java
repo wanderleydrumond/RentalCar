@@ -5,11 +5,13 @@ import com.drumond.rentalcar.exceptions.RentalCarException;
 import com.drumond.rentalcar.models.Car;
 import com.drumond.rentalcar.models.User;
 import com.drumond.rentalcar.repositories.CarRepository;
+import com.drumond.rentalcar.utilities.Constants;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -41,9 +43,17 @@ public class CarService {
         User creator = userService.getByToken(token);
 
         if (!creator.getRole().equals(Role.MANAGER)) {
-            throw new RentalCarException(HttpStatus.FORBIDDEN, "Action not allowed", "You do not have enough permitioms to perform this operation.");
+            throw new RentalCarException(HttpStatus.FORBIDDEN, Constants.HEADER_FORBIDDEN, Constants.BODY_LACK_PERMITIONS);
         }
 
         return carRepository.save(newCar);
+    }
+
+    public List<Car> getByBrand(UUID token, String brand) {
+        if (token != null) {
+            userService.getByToken(token);
+        }
+
+        return carRepository.findByBrand(brand);
     }
 }

@@ -6,6 +6,7 @@ import com.drumond.rentalcar.exceptions.RentalCarException;
 import com.drumond.rentalcar.mappers.UserMapper;
 import com.drumond.rentalcar.models.User;
 import com.drumond.rentalcar.repositories.UserRepository;
+import com.drumond.rentalcar.utilities.Constants;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -156,7 +157,7 @@ public class UserService {
         if (token != null) {
             getByToken(token);
         }
-        return userRepository.findById(id).orElseThrow(() -> new RentalCarException(HttpStatus.NOT_FOUND, "User not found", "The provided id: " + id + " does not exists in database."));
+        return userRepository.findById(id).orElseThrow(() -> new RentalCarException(HttpStatus.NOT_FOUND, Constants.HEADER_USER_NOT_FOUND, "The provided id: " + id + " does not exists in database."));
     }
 
     /**

@@ -3,6 +3,9 @@ package com.drumond.rentalcar.mappers;
 import com.drumond.rentalcar.dtos.CarDTO;
 import com.drumond.rentalcar.models.Car;
 import org.mapstruct.*;
+
+import java.util.List;
+
 /**
  * Responsible by transform {@link Car} data that transits between backend and frontend.
  * @author Wanderley Drumond
@@ -33,4 +36,6 @@ public interface CarMapper {
     @Mapping(target = "id", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Car partialUpdate(CarDTO carDTO, @MappingTarget Car car);
+
+    List<CarDTO> toDtos(List<Car> carsFound);
 }
