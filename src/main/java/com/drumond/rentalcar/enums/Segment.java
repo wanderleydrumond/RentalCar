@@ -37,6 +37,12 @@ public enum Segment {
      */
     private static final Map<Short, Segment> SEGMENT_MAP = new LinkedHashMap<>();
 
+    static {
+        for (Segment segmentElement : Segment.values()) {
+            SEGMENT_MAP.put(segmentElement.DATABASE_VALUE, segmentElement);
+        }
+    }
+
     /**
      * Changes the {@link Short} value correspondent into {@link Segment} type.
      * @param dataBaseValue {@link Short} value to be converted

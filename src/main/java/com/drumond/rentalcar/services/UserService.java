@@ -29,6 +29,9 @@ public class UserService {
      */
     @Autowired
     private UserRepository userRepository;
+    /**
+     * Contains methods that allows to switch between {@link User} and {@link UserDTO}.
+     */
     @Autowired
     private UserMapper userMapper;
 

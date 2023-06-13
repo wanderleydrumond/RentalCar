@@ -27,6 +27,12 @@ public interface UserMapper {
      * @return the {@link UserDTO} resultant object
      */
     UserDTO toDto(User user);
+
+    /**
+     * Changes a {@link User} {@link List} into a {@link UserDTO} {@link List}.
+     * @param users the list that will be transformed into DTO list
+     * @return the {@link UserDTO} resultant {@link List}
+     */
     List<UserDTO> toDTOs(List<User> users);
 
     /**

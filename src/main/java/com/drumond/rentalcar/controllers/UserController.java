@@ -41,7 +41,7 @@ public class UserController {
     /**
      * Creates a new user (of any role) in the system.
      * @param token signed user identifier key (who will create the new user)
-     * @param userDTO Necessary data that make up a user
+     * @param body Necessary data that make up a user
      * @return {@link ResponseEntity} with status code:
      *  <ul>
      *      <li><strong>201 (CREATED)</strong> if the user was created, along with the {@link UserDTO}</li>
@@ -50,8 +50,8 @@ public class UserController {
      */
     @PostMapping(value = "create/{" + TOKEN + "}")
     @Transactional(rollbackFor = Throwable.class)
-    public ResponseEntity<UserDTO> create(@PathVariable(value = TOKEN) UUID token, @RequestBody @Valid UserDTO userDTO) {
-        User newUser = userMapper.toModel(userDTO);
+    public ResponseEntity<UserDTO> create(@PathVariable(value = TOKEN) UUID token, @RequestBody @Valid UserDTO body) {
+        User newUser = userMapper.toModel(body);
         User createdUser = userService.create(token, newUser);
         UserDTO createdUserDTO = userMapper.toDto(createdUser);
 

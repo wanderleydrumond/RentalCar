@@ -30,8 +30,10 @@ public class LoadDatabase {
     public void loadUsers(ApplicationStartedEvent applicationStartedEvent) {
     final String MANAGER_CODE = "MAN_001",
                  EMPLOYEE_CODE = "EMP_001",
+                 CLIENT_CODE = "CLI_001",
                  MANAGER_NAME = "Migi",
                  EMPLOYEE_NAME = "Shinichi",
+                 CLIENT_NAME = "Satomi",
                  PASSWORD = "123456",
                  LOG_ERROR = "Error loading database";
 
@@ -55,6 +57,16 @@ public class LoadDatabase {
                 employee.setRole(Role.EMPLOYEE);
 
                 userRepository.save(employee);
+            }
+
+            if (!userRepository.existsByCodeAndName(CLIENT_CODE, CLIENT_NAME)){
+                User client = new User();
+                client.setCode(CLIENT_CODE);
+                client.setName(CLIENT_NAME);
+                client.setPassword(PASSWORD);
+                client.setRole(Role.CLIENT);
+
+                userRepository.save(client);
             }
         } catch (Exception exception) {
             log.error(LOG_ERROR, exception);
