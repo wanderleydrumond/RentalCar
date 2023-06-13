@@ -1,6 +1,7 @@
 package com.drumond.rentalcar.services;
 
 import com.drumond.rentalcar.enums.Role;
+import com.drumond.rentalcar.enums.Segment;
 import com.drumond.rentalcar.exceptions.RentalCarException;
 import com.drumond.rentalcar.models.Car;
 import com.drumond.rentalcar.models.User;
@@ -61,5 +62,18 @@ public class CarService {
         }
 
         return carRepository.findByBrand(brand);
+    }
+
+    /**
+     * Gets cars that have the provided segment.
+     * @param token signed user identifier key (who will perform the search)
+     * @param segment of the car to be found
+     * @return the {@link Car} {@link List} that have the provided segment
+     */
+    public List<Car> getBySegment(UUID token, Segment segment) {
+        if (token != null) {
+            userService.getByToken(token);
+        }
+        return carRepository.findBySegment(segment);
     }
 }

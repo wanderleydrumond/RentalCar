@@ -1,6 +1,7 @@
 package com.drumond.rentalcar.controllers;
 
 import com.drumond.rentalcar.dtos.CarDTO;
+import com.drumond.rentalcar.enums.Segment;
 import com.drumond.rentalcar.mappers.CarMapper;
 import com.drumond.rentalcar.models.Car;
 import com.drumond.rentalcar.services.CarService;
@@ -15,8 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-import static com.drumond.rentalcar.utilities.Constants.BRAND;
-import static com.drumond.rentalcar.utilities.Constants.TOKEN;
+import static com.drumond.rentalcar.utilities.Constants.*;
 
 /**
  * Contains all requisition methods that refers to car.
@@ -74,6 +74,26 @@ public class CarController {
     @Transactional(readOnly = true)
     public ResponseEntity<List<CarDTO>> getAllByBrand(@PathVariable(value = TOKEN) UUID token, @RequestParam(value = BRAND) String brand) {
         List<Car> carsFound = carService.getByBrand(token, brand);
+        List<CarDTO> carsDTOFound = carMapper.toDtos(carsFound);
+
+        return carsDTOFound.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(carsDTOFound);
+    }
+
+    /**
+     * Gets cars that have the provided segment.
+     * @param token signed user identifier key (who will perform the search)
+     * @param segment of the car to be found
+     * @return {@link ResponseEntity} with status code:
+     *  <ul>
+     *      <li><strong>200 (OK)</strong> if, at least one car was found, along with the {@link CarDTO} {@link List}</li>
+     *      <li><strong>204 (NO CONTENT)</strong> if no cars were found in database</li>
+     *      <li><strong>403 (FORBIDDEN)</strong> if the provided token was not found in database</li>
+     *  </ul>
+     */
+    @GetMapping(value = "by-segment/{" + TOKEN + "}")
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<CarDTO>> getAllBySegment(@PathVariable(value = TOKEN) UUID token, @RequestParam(value = SEGMENT) Segment segment) {
+        List<Car> carsFound = carService.getBySegment(token, segment);
         List<CarDTO> carsDTOFound = carMapper.toDtos(carsFound);
 
         return carsDTOFound.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(carsDTOFound);

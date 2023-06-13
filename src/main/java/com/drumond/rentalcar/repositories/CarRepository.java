@@ -1,5 +1,6 @@
 package com.drumond.rentalcar.repositories;
 
+import com.drumond.rentalcar.enums.Segment;
 import com.drumond.rentalcar.models.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -18,4 +19,11 @@ public interface CarRepository extends JpaRepository<Car, Long>, JpaSpecificatio
      * @return the {@link Car} {@link List} that have the provided brand
      */
     List<Car> findByBrand(String brand);
+
+    /**
+     * Finds all cars that have the provided segment in database.
+     * @param segment of the cars to be found
+     * @return the {@link Car} {@link List} that have the provided segment
+     */
+    List<Car> findBySegment(Segment segment);
 }
