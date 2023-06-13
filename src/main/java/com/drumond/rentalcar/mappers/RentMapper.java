@@ -3,9 +3,10 @@ package com.drumond.rentalcar.mappers;
 import com.drumond.rentalcar.dtos.RentDTO;
 import com.drumond.rentalcar.mappers.utils.RentMapperUtil;
 import com.drumond.rentalcar.models.Rent;
-import org.mapstruct.*;
-
-import java.time.ZonedDateTime;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.NullValueCheckStrategy;
 
 /**
  * Responsible by transform {@link Rent} data that transits between backend and frontend.
@@ -32,13 +33,4 @@ public interface RentMapper {
     @Mapping(target = "userId", expression = "java((rent.getClient().getId()))")
     @Mapping(target = "carDTO", source = "car", qualifiedByName = "fromCartoCarDTO")
     RentDTO toDto(Rent rent);
-
-    /**
-     * Sets the date when a car was rented picking the system time.
-     * @param rent the object to update
-     */
-    @AfterMapping
-    default void setRentAt(@MappingTarget Rent rent) {
-        rent.setRentAt(ZonedDateTime.now());
-    }
 }

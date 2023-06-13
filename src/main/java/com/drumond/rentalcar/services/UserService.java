@@ -82,7 +82,7 @@ public class UserService {
      */
     public User getByToken(UUID token) {
         return userRepository.findByToken(token).orElseThrow(() -> new RentalCarException(HttpStatus.FORBIDDEN,
-                "Action not allowed", "You cannot perform the action with the provided token: " + token));
+                Constants.HEADER_FORBIDDEN, "You cannot perform the action with the provided token: " + token));
     }
 
 
