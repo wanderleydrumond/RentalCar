@@ -12,5 +12,10 @@ import java.util.List;
  * @author Wanderley Drumond
  */
 public interface CarRepository extends JpaRepository<Car, Long>, JpaSpecificationExecutor<Car> {
+    /**
+     * Finds all cars that have the provided brand in database.
+     * @param brand of the cars to be found
+     * @return the {@link Car} {@link List} that have the provided brand
+     */
     List<Car> findByBrand(String brand);
 }

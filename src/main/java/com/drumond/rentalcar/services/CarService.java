@@ -49,6 +49,12 @@ public class CarService {
         return carRepository.save(newCar);
     }
 
+    /**
+     * Gets cars that have the provided brand.
+     * @param token signed user identifier key (who will perform the search)
+     * @param brand of the car to be found
+     * @return the {@link Car} {@link List} that have the provided brand
+     */
     public List<Car> getByBrand(UUID token, String brand) {
         if (token != null) {
             userService.getByToken(token);

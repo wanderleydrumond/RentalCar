@@ -28,6 +28,13 @@ public interface CarMapper {
     CarDTO toDto(Car car);
 
     /**
+     * Changes a {@link Car} {@link List} into a {@link CarDTO} {@link List}.
+     * @param carsFound the list that will be transformed into DTO list
+     * @return the {@link CarDTO} resultant {@link List}
+     */
+    List<CarDTO> toDtos(List<Car> carsFound);
+
+    /**
      * Updates a {@link Car}.
      * @param carDTO object that contains the information to update
      * @param car object to be updated
@@ -36,6 +43,4 @@ public interface CarMapper {
     @Mapping(target = "id", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Car partialUpdate(CarDTO carDTO, @MappingTarget Car car);
-
-    List<CarDTO> toDtos(List<Car> carsFound);
 }

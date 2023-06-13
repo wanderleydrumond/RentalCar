@@ -59,12 +59,23 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCarDTO);
     }
 
+    /**
+     * Gets cars that have the provided brand.
+     * @param token signed user identifier key (who will perform the search)
+     * @param brand of the car to be found
+     * @return {@link ResponseEntity} with status code:
+     *  <ul>
+     *      <li><strong>200 (OK)</strong> if, at least one car was found, along with the {@link CarDTO} {@link List}</li>
+     *      <li><strong>204 (NO CONTENT)</strong> if no cars were found in database</li>
+     *      <li><strong>403 (FORBIDDEN)</strong> if the provided token was not found in database</li>
+     *  </ul>
+     */
     @GetMapping(value = "by-brand/{" + TOKEN + "}")
     @Transactional(readOnly = true)
     public ResponseEntity<List<CarDTO>> getAllByBrand(@PathVariable(value = TOKEN) UUID token, @RequestParam(value = BRAND) String brand) {
         List<Car> carsFound = carService.getByBrand(token, brand);
         List<CarDTO> carsDTOFound = carMapper.toDtos(carsFound);
 
-        return ResponseEntity.ok().body(carsDTOFound);
+        return carsDTOFound.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(carsDTOFound);
     }
 }
