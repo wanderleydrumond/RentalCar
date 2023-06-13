@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+import static com.drumond.rentalcar.utilities.Constants.ID;
 import static com.drumond.rentalcar.utilities.Constants.TOKEN;
 
 /**
@@ -55,5 +56,25 @@ public class RentController {
         RentDTO createdRentDTO = rentMapper.toDto(createdRent);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRentDTO);
+    }
+
+    /**
+     * Return a car to the store. (Ends the provided rent)
+     * @param token signed user identifier key (who will perform the operation)
+     * @param rentId rent identfication number
+     * @return {@link ResponseEntity} with status code:
+     *  <ul>
+     *      <li><strong>200 (OK)</strong> if user was updated, along with the {@link RentDTO}</li>
+     *      <li><strong>403 (FORBIDDEN)</strong> if the provided token was not found in database</li>
+     *      <li><strong>404 (NOT FOUND)</strong> if the provided rent id was not found in database</li>
+     *  </ul>
+     */
+    @PutMapping(value = "update/{" + TOKEN + "}")
+    @Transactional(rollbackFor = Throwable.class)
+    public ResponseEntity<RentDTO> update(@PathVariable(value = TOKEN) UUID token, @RequestParam(value = ID) Long rentId){
+        Rent rentUpdated = rentService.update(token, rentId);
+        RentDTO rentDTOUpdated = rentMapper.toDto(rentUpdated);
+
+        return ResponseEntity.ok().body(rentDTOUpdated);
     }
 }

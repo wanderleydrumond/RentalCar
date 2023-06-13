@@ -161,14 +161,14 @@ public class UserController {
      * @param token signed user identifier key (who will perform the update)
      * @param body user data to update
      * @return {@link ResponseEntity} with status code:
-     *  <ol>
+     *  <ul>
      *      <li><strong>200 (OK)</strong> if user was updated, along with the {@link UserDTO}</li>
      *      <li><strong>403 (FORBIDDEN)</strong> if the: </li>
-     *      <ul>
+     *      <ul type = "circle">
      *          <li>provided token was not found in database</li>
      *          <li>signed user does not have enough permitions</li>
      *      </ul>
-     *  </ol>
+     *  </ul>
      */
     @PutMapping(value = "update/{" + TOKEN + "}")
     @Transactional(rollbackFor = Throwable.class)
