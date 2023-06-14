@@ -27,6 +27,11 @@ public interface CarRepository extends JpaRepository<Car, Long>, JpaSpecificatio
      * @return the {@link Car} {@link List} that have the provided segment
      */
     List<Car> findBySegment(Segment segment);
+
+    /**
+     * Finds in database all cars that have, in rents table the return_at column at null.
+     * @return The {@link Car} {@link List} that have, in rents table the return_at column at null
+     */
     @Query(value = "SELECT * FROM cars WHERE id NOT IN (SELECT car_id FROM rents WHERE return_at IS NULL)", nativeQuery = true)
     List<Car> findAvailables();
 }
