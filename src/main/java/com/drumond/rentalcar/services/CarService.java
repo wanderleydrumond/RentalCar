@@ -76,4 +76,18 @@ public class CarService {
         }
         return carRepository.findBySegment(segment);
     }
+
+    /**
+     * Gets all cars availables to rent.
+     * <ol>
+     *     <li>Checks if user is signed in (employee and manager are allowed)</li>
+     * </ol>
+     * @param token signed user identifier key (who will perform the search)
+     * @return The {@link Car} {@link List} that have, in rents table the return_at column at null
+     */
+    public List<Car> getAvailables(UUID token) {
+        userService.getByToken(token);
+
+        return carRepository.findAvailables();
+    }
 }

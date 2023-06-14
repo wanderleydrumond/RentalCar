@@ -98,4 +98,18 @@ public class CarController {
 
         return carsDTOFound.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(carsDTOFound);
     }
+
+    /**
+     * Gets all cars availables to rent.
+     * @param token signed user identifier key (who will perform the search)
+     * @return
+     */
+    @GetMapping(value = "availables/{" + TOKEN + "}")
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<CarDTO>> getAvailables(@PathVariable(value = TOKEN) UUID token) {
+        List<Car> carsAvailable = carService.getAvailables(token);
+        List<CarDTO> carsDTOAvailable = carMapper.toDtos(carsAvailable);
+
+        return carsDTOAvailable.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(carsDTOAvailable);
+    }
 }
