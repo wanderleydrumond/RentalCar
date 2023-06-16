@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Class that contains all the programmatic logic regarding the user.
+ * Contains all programmatic logic regarding the user.
  * @author Wanderley Drumond
  */
 @Service

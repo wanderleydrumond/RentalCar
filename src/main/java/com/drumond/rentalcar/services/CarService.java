@@ -15,6 +15,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Contains all programmatic logic regarding car.
+ * @author Wanderley Drumond
+ */
 @Service
 @AllArgsConstructor
 public class CarService {

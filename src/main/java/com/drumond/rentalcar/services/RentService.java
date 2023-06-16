@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Contains all programmatic logic regarding rent.
+ * @author Wanderley Drumond
+ */
 @Service
 @AllArgsConstructor
 public class RentService {
