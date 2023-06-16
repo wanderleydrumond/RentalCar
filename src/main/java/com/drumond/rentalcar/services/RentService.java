@@ -20,8 +20,14 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class RentService {
+    /**
+     * Contains all methods related to business layer that concerns to user.
+     */
     @Autowired
     UserService userService;
+    /**
+     * Contains all methods to manipulates database regarding rents table.
+     */
     @Autowired
     RentRepository rentRepository;
 
