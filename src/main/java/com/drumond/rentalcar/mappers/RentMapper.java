@@ -8,6 +8,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.NullValueCheckStrategy;
 
+import java.util.List;
+
 /**
  * Responsible by transform {@link Rent} data that transits between backend and frontend.
  * @author Wanderley Drumond
@@ -33,4 +35,11 @@ public interface RentMapper {
     @Mapping(target = "userId", expression = "java((rent.getClient().getId()))")
     @Mapping(target = "carDTO", source = "car", qualifiedByName = "fromCartoCarDTO")
     RentDTO toDto(Rent rent);
+
+    /**
+     * Changes a {@link Rent} {@link List} into a {@link RentDTO} {@link List}.
+     * @param rents the list that will be transformed into DTO list
+     * @return the {@link RentDTO} resultant {@link List}
+     */
+    List<RentDTO> toDtos(List<Rent> rents);
 }

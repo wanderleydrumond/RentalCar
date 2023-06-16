@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 import static com.drumond.rentalcar.utilities.Constants.ID;
@@ -76,5 +77,25 @@ public class RentController {
         RentDTO rentDTOUpdated = rentMapper.toDto(rentUpdated);
 
         return ResponseEntity.ok().body(rentDTOUpdated);
+    }
+
+    /**
+     * Gets all cars rent by the provided client id.
+     * @param token    signed user identifier key (who will perform the search)
+     * @param clientId target user (who will have all rents searched)
+     * @return {@link ResponseEntity} with status code:
+     *  <ul>
+     *      <li><strong>200 (OK)</strong> if user was updated, along with the {@link RentDTO} {@link List}</li>
+     *      <li><strong>204 (NO CONTENT)</strong> if no rents were found in database</li>
+     *      <li><strong>403 (FORBIDDEN)</strong> if the provided token was not found in database</li>
+     *  </ul>
+     */
+    @GetMapping(value = "by-user/{" + TOKEN + "}")
+    @Transactional(rollbackFor = Throwable.class)
+    public ResponseEntity<List<RentDTO>> getAllCarsRentByClientId(@PathVariable(value = TOKEN) UUID token, @RequestParam(value = ID) Long clientId){
+        List<Rent> rents = rentService.getAllCarsRentByClientId(token, clientId);
+        List<RentDTO> rentsDTO = rentMapper.toDtos(rents);
+
+        return rentsDTO.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(rentsDTO);
     }
 }

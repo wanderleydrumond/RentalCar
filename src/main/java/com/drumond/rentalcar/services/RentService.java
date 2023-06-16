@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -78,5 +79,20 @@ public class RentService {
         }
 
         return optionalRent.get();
+    }
+
+    /**
+     * Gets all cars rent by the provided client id.
+     * <ol>
+     *     <li>Checks if user is signed in (employee and manager are allowed)</li>
+     * </ol>
+     * @param token    signed user identifier key (who will perform the search)
+     * @param clientId target user (who will have all rents searched)
+     * @return the {@link Rent} {@link List} from the provided user id
+     */
+    public List<Rent> getAllCarsRentByClientId(UUID token, Long clientId) {
+        userService.getByToken(token);
+
+        return rentRepository.findAllByClientId(clientId);
     }
 }
