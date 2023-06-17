@@ -94,4 +94,20 @@ public class CarService {
 
         return carRepository.findAvailables();
     }
+
+    /**
+     * Gets all cars ordered by brand ascending.
+     * <ol>
+     *     <li>Checks if user is signed in (employee and manager are allowed)</li>
+     * </ol>
+     * @param token signed user identifier key (who will perform the search)
+     * @return the {@link Car} {@link List} that have, ordered by brand ascending
+     */
+    public List<Car> getCarsByBrand(UUID token) {
+        userService.getByToken(token);
+        /*Sort sort = Sort.by(Sort.Direction.ASC, "brand");
+
+        return carRepository.findAll(sort);*/
+        return carRepository.findAllByOrderByBrandAsc();
+    }
 }

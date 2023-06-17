@@ -102,7 +102,12 @@ public class CarController {
     /**
      * Gets all cars availables to rent.
      * @param token signed user identifier key (who will perform the search)
-     * @return
+     * @return {@link ResponseEntity} with status code:
+     *  <ul>
+     *      <li><strong>200 (OK)</strong> if, at least one car was found, along with the {@link CarDTO} {@link List}</li>
+     *      <li><strong>204 (NO CONTENT)</strong> if no cars were found in database</li>
+     *      <li><strong>403 (FORBIDDEN)</strong> if the provided token was not found in database</li>
+     *  </ul>
      */
     @GetMapping(value = "availables/{" + TOKEN + "}")
     @Transactional(readOnly = true)
@@ -111,5 +116,23 @@ public class CarController {
         List<CarDTO> carsDTOAvailable = carMapper.toDtos(carsAvailable);
 
         return carsDTOAvailable.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(carsDTOAvailable);
+    }
+
+    /**
+     * Gets all cars ordered by brand ascending.
+     * @param token signed user identifier key (who will perform the search)
+     *  <ul>
+     *      <li><strong>200 (OK)</strong> if, at least one car was found, along with the {@link CarDTO} {@link List}</li>
+     *      <li><strong>204 (NO CONTENT)</strong> if no cars were found in database</li>
+     *      <li><strong>403 (FORBIDDEN)</strong> if the provided token was not found in database</li>
+     *  </ul>
+     */
+    @GetMapping(value = "by-brand-asc/{" + TOKEN + "}")
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<CarDTO>> getCarsByBrand(@PathVariable(value = TOKEN) UUID token) {
+        List<Car> carsByBrand = carService.getCarsByBrand(token);
+        List<CarDTO> carsDTOByBrand = carMapper.toDtos(carsByBrand);
+
+        return carsDTOByBrand.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(carsDTOByBrand);
     }
 }

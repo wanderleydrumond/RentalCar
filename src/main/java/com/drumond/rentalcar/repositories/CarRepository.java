@@ -30,8 +30,14 @@ public interface CarRepository extends JpaRepository<Car, Long>, JpaSpecificatio
 
     /**
      * Finds in database all cars that have, in rents table the return_at column at null.
-     * @return The {@link Car} {@link List} that have, in rents table the return_at column at null
+     * @return the {@link Car} {@link List} that have, in rents table the return_at column at null
      */
     @Query(value = "SELECT * FROM cars WHERE id NOT IN (SELECT car_id FROM rents WHERE return_at IS NULL)", nativeQuery = true)
     List<Car> findAvailables();
+
+    /**
+     * Finds in database all cars ordered by brand ascending.
+     * @return the {@link Car} {@link List} ordered by brand ascending
+     */
+    List<Car> findAllByOrderByBrandAsc();
 }
