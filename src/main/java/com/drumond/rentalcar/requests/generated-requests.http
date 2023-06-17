@@ -1,0 +1,132 @@
+### Sign in
+PUT http://localhost:8080/rentalcar/user/signin?code={{manager_code}}&password={{password}}
+
+### Sign out
+PUT http://localhost:8080/rentalcar/user/signout/{{manager_token}}
+
+### Create User
+POST http://localhost:8080/rentalcar/user/create/{{employee_token}}
+Content-Type: application/json
+
+{
+    "name": "Yuko Tachikawa",
+    "password": {{password}},
+    "role": "EMPLOYEE"
+}
+
+### Get user by name
+GET http://localhost:8080/rentalcar/user/by-name/{{employee_name}}
+
+### Get all users
+GET http://localhost:8080/rentalcar/user/all/{{employee_token}}
+
+### Get users by code or name
+GET http://localhost:8080/rentalcar/user/by-code-name/{{employee_token}}?code=MAN_001&name=Shinichi
+
+### Get user by id
+GET http://localhost:8080/rentalcar/user/by-id/{{employee_token}}?id=3
+
+### Update user
+PUT http://localhost:8080/rentalcar/user/update/{{employee_token}}
+Content-Type: application/json
+
+{
+    "id": 3,
+    "name": "Satomi Murano"
+}
+
+<> 2023-06-13T155602.200.json
+
+### Create Car
+POST http://localhost:8080/rentalcar/car/create/{{manager_token}}
+Content-Type: application/json
+
+{
+  "segment": "SEDAN",
+  "dailyPrice": 50.0,
+  "brand": "OPEL"
+}
+
+### Get all cars by brand
+GET http://localhost:8080/rentalcar/car/by-brand/{{employee_token}}?brand=OPEL
+
+<> 2023-06-13T141651.200.json
+<> 2023-06-13T141642.200.json
+<> 2023-06-13T141633.200.json
+<> 2023-06-13T125841.200.json
+
+### Get all cars by segment
+GET http://localhost:8080/rentalcar/car/by-segment/{{manager_token}}?segment=HATCH
+
+<> 2023-06-13T150058.200.json
+<> 2023-06-13T150045.200.json
+<> 2023-06-13T150023.200.json
+
+### Rent a car
+POST http://localhost:8080/rentalcar/rent/create/{{employee_token}}
+Content-Type: application/json
+
+{
+  "userId": 3,
+  "carDTO": {
+    "id": 2
+  }
+}
+
+<> 2023-06-16T133210.201.json
+<> 2023-06-14T174250.201.json
+<> 2023-06-14T121008.201.json
+<> 2023-06-13T193900.201.json
+<> 2023-06-13T164755.201.json
+
+### Finalize a rent
+PUT http://localhost:8080/rentalcar/rent/update/{{employee_token}}?id=3
+
+<> 2023-06-14T173848.200.json
+<> 2023-06-13T193917.200.json
+<> 2023-06-13T193237.200.json
+<> 2023-06-13T193150.500.json
+<> 2023-06-13T192413.500.json
+<> 2023-06-13T184718.400.json
+<> 2023-06-13T184708.400.json
+<> 2023-06-13T184630.400.json
+<> 2023-06-13T184256.400.json
+
+### Get all cars availables to rent
+GET http://localhost:8080/rentalcar/car/availables/{{employee_token}}
+
+<> 2023-06-14T160935.200.json
+<> 2023-06-14T160501.200.json
+<> 2023-06-14T160216.200.json
+
+### Get all cars rent by a client id
+GET http://localhost:8080/rentalcar/rent/by-user/{{employee_token}}?id=2
+
+<> 2023-06-16T134453.200.json
+<> 2023-06-16T083013.500.json
+<> 2023-06-16T082741.500.json
+<> 2023-06-16T082426.500.json
+<> 2023-06-16T082121.500.json
+<> 2023-06-16T081955.500.json
+<> 2023-06-16T081709.500.json
+<> 2023-06-16T081321.500.json
+<> 2023-06-16T081213.500.json
+<> 2023-06-14T182034.200.json
+<> 2023-06-14T182006.405.json
+<> 2023-06-14T181931.200.json
+<> 2023-06-14T181715.200.json
+<> 2023-06-14T181500.200.json
+<> 2023-06-14T180710.200.json
+<> 2023-06-14T180500.200.json
+<> 2023-06-14T180417.200.json
+<> 2023-06-14T175231.200.json
+<> 2023-06-14T174438.200.json
+<> 2023-06-14T174312.200.json
+<> 2023-06-14T174303.200.json
+<> 2023-06-14T173659.200.json
+
+### Get list of cars sorted ascending by brand
+GET http://localhost:8080/rentalcar/car/by-brand-asc/{{employee_token}}
+
+<> 2023-06-17T094421.200.json
+<> 2023-06-17T093408.200.json
