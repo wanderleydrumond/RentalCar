@@ -25,13 +25,16 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserService {
 
+    // NOTE: 19/06/2023 The @Autowired can be replaced by constructor initialization
     /**
      * Contains all methods to manipulates database regarding users table.
+     * @see <a href="https://www.baeldung.com/java-spring-field-injection-cons">Why Is Field Injection Not Recommended?</a>
      */
     @Autowired
     private UserRepository userRepository;
     /**
      * Contains methods that allows to switch between {@link User} and {@link UserDTO}.
+     * @see <a href="https://www.baeldung.com/java-spring-field-injection-cons">Why Is Field Injection Not Recommended?</a>
      */
     @Autowired
     private UserMapper userMapper;

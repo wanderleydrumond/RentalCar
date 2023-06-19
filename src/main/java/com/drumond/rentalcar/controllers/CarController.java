@@ -30,11 +30,13 @@ import static com.drumond.rentalcar.utilities.Constants.*;
 public class CarController {
     /**
      * Contains methods that allows to switch between {@link Car} and {@link CarDTO}.
+     * @see <a href="https://www.baeldung.com/java-spring-field-injection-cons">Why Is Field Injection Not Recommended?</a>
      */
     @Autowired
     CarMapper carMapper;
     /**
      * Contains all methods related to business layer that concerns to car.
+     * @see <a href="https://www.baeldung.com/java-spring-field-injection-cons">Why Is Field Injection Not Recommended?</a>
      */
     @Autowired
     CarService carService;

@@ -29,11 +29,13 @@ public class UserController {
 
     /**
      * Contains all methods related to business layer that concerns to user.
+     * @see <a href="https://www.baeldung.com/java-spring-field-injection-cons">Why Is Field Injection Not Recommended?</a>
      */
     @Autowired
     private UserService userService;
     /**
      * Contains methods that allows to switch between {@link User} and {@link UserDTO}.
+     * @see <a href="https://www.baeldung.com/java-spring-field-injection-cons">Why Is Field Injection Not Recommended?</a>
      */
     @Autowired
     private UserMapper userMapper;

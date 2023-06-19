@@ -22,11 +22,13 @@ import java.util.UUID;
 public class RentService {
     /**
      * Contains all methods related to business layer that concerns to user.
+     * @see <a href="https://www.baeldung.com/java-spring-field-injection-cons">Why Is Field Injection Not Recommended?</a>
      */
     @Autowired
     UserService userService;
     /**
      * Contains all methods to manipulates database regarding rents table.
+     * @see <a href="https://www.baeldung.com/java-spring-field-injection-cons">Why Is Field Injection Not Recommended?</a>
      */
     @Autowired
     RentRepository rentRepository;

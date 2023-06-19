@@ -24,11 +24,13 @@ import java.util.UUID;
 public class CarService {
     /**
      * Contains all methods related to business layer that concerns to user.
+     * @see <a href="https://www.baeldung.com/java-spring-field-injection-cons">Why Is Field Injection Not Recommended?</a>
      */
     @Autowired
     private UserService userService;
     /**
      * Contains all methods to manipulates database regarding cars table.
+     * @see <a href="https://www.baeldung.com/java-spring-field-injection-cons">Why Is Field Injection Not Recommended?</a>
      */
     @Autowired
     private CarRepository carRepository;

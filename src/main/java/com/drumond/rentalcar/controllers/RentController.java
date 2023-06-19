@@ -30,11 +30,13 @@ import static com.drumond.rentalcar.utilities.Constants.TOKEN;
 public class RentController {
     /**
      * Contains methods that allows to switch between {@link Rent} and {@link RentDTO}.
+     * @see <a href="https://www.baeldung.com/java-spring-field-injection-cons">Why Is Field Injection Not Recommended?</a>
      */
     @Autowired
     RentMapper rentMapper;
     /**
      * Contains all methods related to business layer that concerns to rent.
+     * @see <a href="https://www.baeldung.com/java-spring-field-injection-cons">Why Is Field Injection Not Recommended?</a>
      */
     @Autowired
     RentService rentService;
